@@ -1,16 +1,19 @@
-var express = require('express');
-var app = express();
-var connection = require('./models/connection.js')
+const express = require('express');
+const app = express();
+const connection = require('./models/connection.js')
+const orm = require('./models/orm.js')
 
 // middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 let PORT = 3000||process.env.PORT;
-connection.connect(
-connection.query('select * from mantras',function(err,response){
-    console.log(response.rows);
+// connection to db
+connection.connect()
+orm.findMantraByEmotion('love',(data)=>{
+    console.log(data.rows)
 })
-);
+
+
 
 
 
