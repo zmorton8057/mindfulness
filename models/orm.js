@@ -9,7 +9,8 @@ const orm = {
             cb(response);
         })
     },
-    
+    // this function allows you to find mantra by primary OR secondary emotion, it takes in an emotion as a string as the 1st argument 
+    // and a call back with an argument so that you can do whatever you want with the returned data
     findMantraByEmotion: (emotion,cb)=>{
         connection.query('select * from mantras where primaryEmotion = $1 or secondaryEmotion = $2',[emotion, emotion],function(err,response){
             if(err) throw err;
