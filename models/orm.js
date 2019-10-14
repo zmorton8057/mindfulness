@@ -17,6 +17,25 @@ const orm = {
             cb(response)
         });
     },
+    getAllPrimaryEmotions : (cb)=>{
+        connection.query('select distinct primary_emotion from emotions',function(err,response){
+            if(err) throw err;
+            cb(response);
+        })
+    },
+    getSecondaryEmotions : (primary,cb)=>{
+        connection.query('select distinct secondary_emotion, secondary_emotion_def from emotions where primary_emotion = $1',[primary],function(err,response){
+            if(err) throw err;
+            cb(response);
+        })
+    },
+    getTertiaryEmotions : (primary, secondary, cb)=>{
+        connection.query('select distinct * from emotions where primary_emotion = $1 and secondary_emotion=$2',[primary, secondary],function(err,response){
+            if(err) throw err;
+            cb(response);
+        })
+    },
+    
 }
 
 module.exports=orm;
