@@ -7,29 +7,28 @@ const orm = require('./orm.js')
 let PORT = 3000||process.env.PORT;
 // connection to db
 
-// gets all 6 primary emotions for use
-router.get('/getAllPrimary', function (req, res) {
-   orm.getAllPrimaryEmotions((data)=>{
-     console.log(data.rows)
-      res.json(data.rows)
-  })
-});
-// pass in primary emotion as a parameter to receive all secondary emotions and definitions under it
-router.get('/getSecondary/:primary', function (req, res) {
-  let primaryEmotion = req.params.primary;
-  orm.getSecondaryEmotions(primaryEmotion,(data)=>{
-    console.log(data.rows)
-     res.json(data.rows)
- })
-});
+
 // pass in primary and secondary emotions to get tertiary emotions and definitions
-router.get('/getTertiary/:primary/:secondary', function (req, res) {
+router.get('/mood/:primary?/:secondary?', function (req, res) {
+  if(req.params.primary && req.params.secondary){
   let primaryEmotion = req.params.primary;
   let secondaryEmotion = req.params.secondary;
   orm.getTertiaryEmotions(primaryEmotion,secondaryEmotion,(data)=>{
-    console.log(data.rows)
-     res.json(data.rows)
+    // console.log(data.rows)
+     res.json(data.rows) 
  })
+}else if(req.params.primary){
+  let primaryEmotion = req.params.primary;
+  orm.getSecondaryEmotions(primaryEmotion,(data)=>{
+    // console.log(data.rows)
+     res.json(data.rows)
+  });
+}else{
+  orm.getAllPrimaryEmotions((data)=>{
+    // console.log(data.rows)
+     res.json(data.rows)
+ });
+}
 });
 
 

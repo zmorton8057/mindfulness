@@ -8,10 +8,10 @@ const apiRoutes = require('./models/apiRoutes.js');
 // middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-let PORT = 3000||process.env.PORT;
+let PORT = 3001||process.env.PORT;
 // connection to db
 connection.connect()
-app.use('/api/emotions',apiRoutes);
+app.use('/apiroutes',apiRoutes);
 
 
 
